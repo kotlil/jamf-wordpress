@@ -1,0 +1,6 @@
+wordpress_namespace     = "wordpress"
+wordpress_release_name  = "jamf-wordpress"
+wordpress_service_type  = "ClusterIP"
+wordpress_username      = "kotlil"
+wordpress_password      = "admin"
+mariadb_root_password   = "admin"
