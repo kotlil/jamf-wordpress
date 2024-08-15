@@ -10,6 +10,7 @@ variable "wordpress_release_name" {
   default     = "wordpress"
 }
 
+# source: https://github.com/bitnami/charts/tree/main/bitnami
 variable "wordpress_repository" {
   description = "Helm repository for WordPress chart"
   type        = string

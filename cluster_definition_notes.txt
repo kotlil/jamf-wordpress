@@ -1,0 +1,10 @@
+minikube start --nodes 2 -p jamf --memory 2048 --cpus 2
+kubectl get nodes --show-labels
+kubectl label nodes jamf-m02 node-type=worker
+kubectl get nodes --show-labels
+kubectl get nodes -l node-type=control-plane
+kubectl get nodes -l node-type=worker
+kubectl label nodes jamf node-type=control-plane
+kubectl get nodes --show-labels
+kubectl label nodes jamf-m02 kubernetes.io/role=worker
+kubectl get nodes --show-labels

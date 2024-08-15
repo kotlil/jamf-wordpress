@@ -1,36 +1,51 @@
 resource "kubernetes_namespace" "wordpress" {
   metadata {
-    name = var.wordpress_namespace
+    name = "wordpress"
+  }
+}
+
+resource "kubernetes_resource_quota" "wordpress" {
+  metadata {
+    name      = "wordpress-quota"
+    namespace = kubernetes_namespace.wordpress.metadata[0].name
+  }
+  spec {
+    hard = {
+      "requests.cpu"    = "2"
+      "requests.memory" = "2Gi"
+      "limits.cpu"      = "4"
+      "limits.memory"   = "4Gi"
+    }
   }
 }
 
 resource "helm_release" "wordpress" {
-  name       = var.wordpress_release_name
-  repository = var.wordpress_repository
-  chart      = var.wordpress_chart
+  name       = "wordpress"
+  repository = "https://charts.bitnami.com/bitnami"
+  chart      = "wordpress"
   namespace  = kubernetes_namespace.wordpress.metadata[0].name
 
   set {
     name  = "service.type"
-    value = var.wordpress_service_type
+    value = "NodePort"
   }
 
   set {
     name  = "wordpressUsername"
-    value = var.wordpress_username
+    value = "admin"
   }
 
   set {
     name  = "wordpressPassword"
-    value = var.wordpress_password
+    value = "password"
   }
 
   set {
     name  = "mariadb.auth.rootPassword"
-    value = var.mariadb_root_password
+    value = "secretpassword"
   }
 
   values = [
-    file(var.wordpress_values_file)
+    file("${path.module}/../helm/values.yaml")
   ]
 }
