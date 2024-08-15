@@ -34,15 +34,15 @@ mariadb:
       limits:
         cpu: 500m
         memory: 512Mi
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/role
-              operator: In
-              values:
-              - master
+    # affinity:
+    #   nodeAffinity:
+    #     requiredDuringSchedulingIgnoredDuringExecution:
+    #       nodeSelectorTerms:
+    #       - matchExpressions:
+    #         - key: kubernetes.io/role
+    #           operator: In
+    #           values:
+    #           - control-plane
 
 
 wordpress:
@@ -55,12 +55,12 @@ wordpress:
     app: wordpress
     tier: frontend
     environment: test
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: kubernetes.io/role
-            operator: In
-            values:
-            - worker
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: kubernetes.io/role
+  #           operator: In
+  #           values:
+  #           - worker
